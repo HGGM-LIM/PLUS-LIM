@@ -1,0 +1,95 @@
+<PlusConfiguration version="2.1">
+
+  <DataCollection StartupDelaySec="1.0">
+    <DeviceSet
+      Name="PlusServer: OptiTrack + ConoProbe"
+      Description="Broadcasting tracking and distance measurement data through OpenIGTLink."
+    />
+    <Device
+      Id="TrackerDevice"
+      Type="OptiTrack"
+      ToolReferenceFrame="Tracker"
+      AcquisitionRate="100"
+      LocalTimeOffsetSec="0"
+      CalibrationFile="C:/Plus-R/Data/CalibrationFiles/calibration_2015_09_04.cal"
+      Exposition="7"
+      Threshold="200"
+      Illumination="14">
+      <DataSources>
+        <DataSource Type="Tool" Id="RigidBody" ConfFile="C:/Plus-R/Data/ToolDefinitions/RigidBodyXML.xml"/>
+        <DataSource Type="Tool" Id="PolarisPointerTip" ConfFile="C:/Plus-R/Data/ToolDefinitions/PolarisPointerTipXML.xml"/>
+      </DataSources>
+      <OutputChannels>
+        <OutputChannel Id="TrackerStream">
+          <DataSource Id="RigidBody" />
+          <DataSource Id="PolarisPointerTip" />
+        </OutputChannel>
+      </OutputChannels>
+    </Device>
+
+    <Device
+      Id="MeasurerDevice" 
+      Type="OptimetConoProbe"
+      ToolReferenceFrame="Measurer"
+      LocalTimeOffsetSec="0"
+      AcquisitionRate="100"
+      LensOriginAlignment="0.006516976138946 -0.015012135781503 -0.999866073432478 31.376419175357 60.192233430186 -55.986799011887"
+      DelayBetweenMeasurements="1" 
+      Frequency="100" 
+      CoarseLaserPower="13"
+      FineLaserPower="0">
+      <DataSources>
+        <DataSource Type="Tool" Id="Measurement" PortName="Measurement" />
+        <DataSource Type="Tool" Id="Parameters" PortName="Parameters" />
+      </DataSources>
+      <OutputChannels>
+        <OutputChannel Id="MeasurerStream">
+          <DataSource Id="Measurement" />
+          <DataSource Id="Parameters" />
+        </OutputChannel>
+      </OutputChannels>
+    </Device>
+   
+    <Device 
+      Id="TrackedMeasurerDevice" 
+      Type="VirtualMixer" >
+      <InputChannels>
+        <InputChannel Id="MeasurerStream" />
+        <InputChannel Id="TrackerStream" />
+      </InputChannels>
+      <OutputChannels>
+        <OutputChannel Id="TrackedMeasurerStream"/>
+      </OutputChannels>
+    </Device>
+
+    <Device
+      Id="CaptureDevice"
+      Type="VirtualDiscCapture"
+      RequestedFrameRate="100">
+      <InputChannels>
+        <InputChannel Id="TrackedMeasurerStream" />
+      </InputChannels>
+    </Device>
+    
+  </DataCollection>
+  
+  <PlusOpenIGTLinkServer
+    MaxNumberOfIgtlMessagesToSend="1"
+    MaxTimeSpentWithProcessingMs="50"
+    ListeningPort="18944"
+    SendValidTransformsOnly="TRUE"
+    OutputChannelId="TrackedMeasurerStream" >
+    <DefaultClientInfo>
+      <MessageTypes>
+        <Message Type="TRANSFORM" />
+      </MessageTypes>
+      <TransformNames>
+        <Transform Name="RigidBodyToTracker" />
+        <Transform Name="PolarisPointerTipToTracker" />
+        <Transform Name="MeasurementToMeasurer" />
+        <Transform Name="ParametersToMeasurer" />
+      </TransformNames>
+    </DefaultClientInfo>
+  </PlusOpenIGTLinkServer>
+
+</PlusConfiguration>

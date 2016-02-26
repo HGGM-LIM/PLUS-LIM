@@ -1,0 +1,13 @@
+<NPTrackingTools>
+    <FileType> ToolDefinition </FileType>
+    <ToolName>PolarisPointerTip</ToolName>
+    <ToolMarkersNum>4</ToolMarkersNum>
+    <ToolMarkers>
+        <m1 x="82.235" y="17.848" z="-209.918"/>
+        <m2 x="125.919" y="18.826" z="-166.334"/>
+        <m3 x="92.491" y="26.865" z="-122.061"/>
+        <m4 x="83.707" y="33.394" z="-73.353"/>
+    </ToolMarkers>
+    <ToolPivot x="55.7674" y="35.1458" z="82.4089"/>
+    <Info Date="2015.08.14"/>
+</NPTrackingTools>
