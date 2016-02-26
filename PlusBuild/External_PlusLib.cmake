@@ -200,7 +200,7 @@ ENDIF( BUILDNAME )
 # PlusLib
 message("[PLUSLIM] Fix to use source code from original clone repository and not use the respository version of PlusLib")
 #################################### FROM HERE ##############################################
-SET (PLUS_PLUSLIB_DIR ${CMAKE_SOURCE_DIR}/../PlusLib CACHE INTERNAL "Path to store PlusLib contents.")
+SET (PLUS_PLUSLIB_DIR ${CMAKE_SOURCE_DIR}/PlusLib CACHE INTERNAL "Path to store PlusLib contents.")
 
 ExternalProject_Add(PlusLib
   SOURCE_DIR "${PLUS_PLUSLIB_DIR}" 
