@@ -28,9 +28,9 @@ ExternalProject_Add(PlusApp
   SOURCE_DIR "${PLUS_PLUSAPP_DIR}" 
   BINARY_DIR "PlusApp-bin"
   #--Download step--------------
-  SVN_USERNAME ${PLUSBUILD_ASSEMBLA_USERNAME}
-  SVN_PASSWORD ${PLUSBUILD_ASSEMBLA_PASSWORD}
-  SVN_REPOSITORY https://subversion.assembla.com/svn/plus/trunk/PlusApp
+  #SVN_USERNAME ${PLUSBUILD_ASSEMBLA_USERNAME}
+  #SVN_PASSWORD ${PLUSBUILD_ASSEMBLA_PASSWORD}
+  #SVN_REPOSITORY https://subversion.assembla.com/svn/plus/trunk/PlusApp
   ${PLUSBUILD_SVN_REVISION_ARGS}
   #--Configure step-------------
   CMAKE_ARGS 
