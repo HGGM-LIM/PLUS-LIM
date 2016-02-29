@@ -121,14 +121,17 @@ IF (PLUS_USE_OPTITRACK)
          ${CMAKE_CURRENT_SOURCE_DIR}/OptiTrack 
          CACHE INTERNAL "" FORCE)
       
+    # Find BiiGOptitrack Package
+    find_package(BiiGOptitrack REQUIRED)
+
     # Find BiiGOptitrackControl Library
-    find_package (BiiGOptitrackControl REQUIRED)
+    find_package (BiiGOptitrackControl REQUIRED PATHS ${BiiGOptitrack_INSTALL_DIR}/CMake)
     set(External_Libraries_Install ${External_Libraries_Install} ${BiiGOptitrackControl_INSTALL_DIR}/bin/BiiGOptitrackControl${CMAKE_SHARED_LIBRARY_SUFFIX})
     set(External_Libraries_Install ${External_Libraries_Install} ${BiiGOptitrackControl_INSTALL_DIR}/lib/BiiGOptitrackControl${CMAKE_STATIC_LIBRARY_SUFFIX})
     set(DataCollection_INCLUDE_DIRS ${DataCollection_INCLUDE_DIRS} ${BiiGOptitrackControl_INSTALL_DIR}/inc CACHE INTERNAL "" FORCE )
 
     # Find NPTrackingTools Library
-    find_package(NPTrackingTools REQUIRED)
+    find_package(NPTrackingTools REQUIRED PATHS ${BiiGOptitrack_INSTALL_DIR}/CMake)
     set(External_Libraries_Install ${External_Libraries_Install} ${NPTrackingTools_INSTALL_DIR}/bin/${NPTrackingTools_LIBRARY}${CMAKE_SHARED_LIBRARY_SUFFIX})
     set(External_Libraries_Install ${External_Libraries_Install} ${NPTrackingTools_INSTALL_DIR}/lib/${NPTrackingTools_LIBRARY}${CMAKE_STATIC_LIBRARY_SUFFIX})
     set(DataCollection_INCLUDE_DIRS ${DataCollection_INCLUDE_DIRS} ${NPTrackingTools_INCLUDE_DIR} CACHE INTERNAL "" FORCE )
@@ -960,10 +963,10 @@ ENDIF (PLUS_USE_INTERSONSDKCXX_VIDEO)
 
 IF (PLUS_USE_TELEMED_VIDEO)
   # ADD_CUSTOM_COMMAND(OUTPUT 
-	# Telemed/Usgfw2_h.h
-	# Telemed/dlldata.c
-	# Telemed/Usgfw2_i.c
-	# Telemed/Usgfw2_p.c
+  # Telemed/Usgfw2_h.h
+  # Telemed/dlldata.c
+  # Telemed/Usgfw2_i.c
+  # Telemed/Usgfw2_p.c
     # COMMAND midl.exe /out ./Telemed /header Usgfw2_h.h /no_robust ${TELEMED_INCLUDE_DIR}/Usgfw2.idl
   # )
   
@@ -1021,9 +1024,9 @@ ENDIF (PLUS_USE_THORLABS_VIDEO)
 
 IF (PLUS_USE_PHILIPS_3D_ULTRASOUND)
   IF(PLUS_USE_ULTRASONIX_VIDEO)
-	# Ultrasonix contains its own libmmd.dll which does not support all the functionality needed for the philips probe
-	# They both cannot be enabled at the same time.
-	MESSAGE( FATAL_ERROR "Plus cannot enable both Ultrasonix and Philips devices due to .dll conflicts in their respective SDK packages.")
+  # Ultrasonix contains its own libmmd.dll which does not support all the functionality needed for the philips probe
+  # They both cannot be enabled at the same time.
+  MESSAGE( FATAL_ERROR "Plus cannot enable both Ultrasonix and Philips devices due to .dll conflicts in their respective SDK packages.")
   ELSE(PLUS_USE_ULTRASONIX_VIDEO)
     SET (DataCollection_SRCS ${DataCollection_SRCS}
       Philips3D/vtkPhilips3DProbeVideoSource.cxx 
